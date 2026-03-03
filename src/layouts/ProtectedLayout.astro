@@ -1,0 +1,89 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+
+const { title = "HAPPY BIRTHDAY!!!", password } = Astro.props;
+
+// Check if password is provided
+if (!password) {
+  throw new Error('ProtectedLayout requires a "password" prop');
+}
+
+// Get the authentication cookie for this specific page
+const cookieName = `auth_${Astro.url.pathname.replace(/\//g, "_")}`;
+const authCookie = Astro.cookies.get(cookieName);
+
+// Check if user is authenticated for this page
+const isAuthenticated = authCookie?.value === password;
+
+// Check if there was an error (incorrect password)
+const hasError = Astro.url.searchParams.get("error") === "1";
+
+const {
+    bodyClass = ''
+} = Astro.props;
+---
+
+<BaseLayout title={title} bodyClass={bodyClass}>
+  {
+    !isAuthenticated ? (
+      <div class="min-h-screen flex flex-col gap-12 items-center justify-center py-4 px-4">
+        <div class="max-w-md w-full flex flex-col justify-center basis-auto shrink-0 grow">
+          <div class="space-y-8">
+            <div>
+              <h2 class="text-center">
+                happy birthday
+              </h2>
+              <p class="mt-2 text-center">
+                please enter the password to access this page
+              </p>
+            </div>
+
+            <form
+              class="mt-8 space-y-6"
+              method="POST"
+              action={Astro.url.pathname}
+            >
+              <input type="hidden" name="pagePassword" value={password} />
+              <input
+                type="hidden"
+                name="redirectPath"
+                value={Astro.url.pathname}
+              />
+
+              <div>
+                <label for="password" class="sr-only">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  required
+                  class="appearance-none relative block w-full px-3 py-2 border border-black placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                  placeholder="Password"
+                  autofocus
+                />
+              </div>
+
+              {hasError && (
+                <div class="rounded-md bg-red-50 p-4">
+                  <p class="text-sm text-red-800">
+                    Incorrect password. Please try again.
+                  </p>
+                </div>
+              )}
+
+              <div class="flex justify-center">
+                <button type="submit" class="group border border-black rounded-[50%] px-20 py-2 hover:bg-black hover:text-white cursor-pointer">
+                  Access
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    ) : (
+      <slot />
+    )
+  }
+</BaseLayout>

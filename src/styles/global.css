@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+@theme {
+    --font-sans: Times New Roman, serif;
+    --font-serif: Times New Roman, serif;
+    --color-apricot: #EDDED6;
+    --breakpoint-xs: 400px;
+}
+
+@layer theme {
+    .barbra-pic {
+        -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+
+        @media (width >= 30rem) {
+            -webkit-mask-image:
+                linear-gradient(to right, transparent, black 20%, black 80%, transparent),
+                linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            -webkit-mask-composite: source-in;
+            mask-image:
+                linear-gradient(to right, transparent, black 20%, black 80%, transparent),
+                linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+            mask-composite: intersect;
+        }
+    }
+}

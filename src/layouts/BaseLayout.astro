@@ -1,0 +1,26 @@
+---
+import '@styles/global.css';
+
+const {
+  title = 'NO MACHINE',
+  bodyClass = ''
+} = Astro.props;
+---
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+
+		<link rel="icon" type="image/jpg" href="/favicon.jpg" />
+		<link rel="stylesheet" href="https://use.typekit.net/plg0gnj.css">
+        
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+        <title>
+        { title }
+        </title>
+	</head>
+	<body class={"bg-apricot" + (bodyClass ? ` ${bodyClass}` : '')}>
+        <slot />
+		<script src="@scripts/global.js"></script>
+	</body>
+</html>

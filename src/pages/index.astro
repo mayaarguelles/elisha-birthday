@@ -1,17 +1,22 @@
 ---
+import ProtectedLayout from '@layouts/ProtectedLayout.astro';
 
+const password = import.meta.env.PASSWORD;
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<ProtectedLayout password={password}>
+	<div class="min-h-screen w-full flex flex-col items-center justify-center">
+		<img class="w-full h-auto xs:max-w-72 barbra-pic mb-4 aspect-square sm:aspect-auto object-cover" src="barbra.webp" alt="Barbra Streisand" />
+		<div class="flex-[1_0_auto] xs:flex-[0_0_auto] text-center">
+			<p class="text-center leading-tight">
+				happy birthday elisha<br>
+				we've been friends for a few years now<br>
+				so here are some gifts
+			</p>
+			<ul class="mt-8 space-y-8">
+				<li><a href="https://google.com" class="border border-black rounded-[50%] px-20 py-2 hover:bg-black hover:text-white cursor-pointer">link</a></li>
+				<li><a href="https://google.com" class="border border-black rounded-[50%] px-20 py-2 hover:bg-black hover:text-white cursor-pointer">link</a></li>
+				<li><a href="https://google.com" class="border border-black rounded-[50%] px-20 py-2 hover:bg-black hover:text-white cursor-pointer">link</a></li>
+			</ul>
+		</div>
+	</div>
+</ProtectedLayout>
